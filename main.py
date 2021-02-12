@@ -31,12 +31,18 @@ def calc_simple_string(s: str) -> int:
         equation.insert(0, perform_op(float(equation.pop(0)), equation.pop(0), float(equation.pop(0))))
     return equation[0]
 
-if __name__ == '__main__':
+def calc_complex_string(s: str) -> int:
     pat = r'\([^()]*?\)'
-    s =  '(12 * ((3 + 1) - (3 - 2))) - 1'
-    while re.match(r'[()]', s):
+    while re.search(r'[()]+', s):
         matches = re.findall(pat, s)
         for match in matches:
             s = s.replace(match, str(calc_simple_string(match)))
             print(s)
-    print(calc_simple_string(s))
+    return calc_simple_string(s)
+
+if __name__ == '__main__':
+    while 1:
+        s = input('Enter an equation> ')
+        if s == 'exit':
+            break
+        print(calc_complex_string(s))
